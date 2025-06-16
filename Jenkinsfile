@@ -26,6 +26,7 @@ pipeline {
                             cp $SA_KEY $GOOGLE_APPLICATION_CREDENTIALS
                         '''
                     }
+                }
         }
         stage('init') {
             steps {
@@ -83,5 +84,4 @@ pipeline {
             }
         }
     }
-}
 }
