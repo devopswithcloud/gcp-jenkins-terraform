@@ -14,11 +14,23 @@ pipeline {
             description: 'Choose terraform workflow'
         )
     }
+    environment {
+        GCS_BUCKET = "ancient-tractor-462500-u5-tf"
+        GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/sa-key.json"
+    }
     stages {
+        stage ('Setup GCE Auth') {
+            steps {
+                    withCredentials([file(credentialsId: 'gcp-service-account-key', variable: 'SA_KEY')]) {
+                        sh '''
+                            cp $SA_KEY $GOOGLE_APPLICATION_CREDENTIALS
+                        '''
+                    }
+        }
         stage('init') {
             steps {
                 sh """
-                    terraform init  
+                    terraform init  -backend-config="bucket=${env.GCS_BUCKET}" -backend-config="prefix=${params.ENVIRONMENT}"
                 """
             }
         }
