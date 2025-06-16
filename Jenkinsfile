@@ -5,7 +5,7 @@ pipeline {
     parameters {
         choice(
             name: 'ENVIRONMENT',
-            choices: ['na','dev', 'test', 'stage', 'prod'],
+            choices: ['dev', 'test', 'stage', 'prod'],
             description: 'Select Environment'
         )
         choice(
@@ -18,11 +18,28 @@ pipeline {
         stage('init') {
             steps {
                 sh """
-                    terraform validate 
+                    terraform init  
+                """
+            }
+        }
+        stage('validate') {
+            when {
+                expression {
+                    params.ACTION == 'validate'
+                }
+            }
+            steps {
+                sh """
+                    terraform validate  
                 """
             }
         }
         stage ('Plan') {
+            when {
+                expression {
+                    params.ACTION == 'plan'
+                }
+            }
             steps {
                 sh """
                     terraform plan 
@@ -30,6 +47,11 @@ pipeline {
             }
         }
         stage ('apply') {
+            when {
+                expression {
+                    params.ACTION == 'apply'
+                }
+            }
             steps {
                 sh """
                     terraform apply --auto-approve 
@@ -37,6 +59,11 @@ pipeline {
             }
         }
         stage ('destroy') {
+            when {
+                expression {
+                    params.ACTION == 'destroy'
+                }
+            }
             steps {
                 sh """
                     terraform destroy --auto-approve 
