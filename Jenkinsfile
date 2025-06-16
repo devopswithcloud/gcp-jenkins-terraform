@@ -5,16 +5,16 @@ pipeline {
     parameters {
         choice(
             name: 'ENVIRONMENT',
-            choices: ['na','dev', 'test', 'stage', 'prod']
+            choices: ['na','dev', 'test', 'stage', 'prod'],
             description: 'Select Environment'
         )
         choice(
             name: 'ACTION',
-            choices: ['validate\nplan\napply\ndestroy']
+            choices: ['validate\nplan\napply\ndestroy'],
             description: 'Choose terraform workflow'
         )
     }
-    stage {
+    stages {
         stage('init') {
             steps {
                 sh """
