@@ -86,7 +86,7 @@ pipeline {
                     input message: 'Are you sure to destroy Infra ?', ok:'yes', submitter: 'i27academy,sreuser'
                 }
                 sh """
-                    terraform destroy --auto-approve 
+                    terraform destroy -var-file=${TFVARS_FILE} --auto-approve 
                 """
             }
         }
