@@ -67,7 +67,7 @@ pipeline {
                 }
             }
             steps {
-                timeout (time: 300, unit: SECONDS) {
+                timeout (time: 300, unit: 'SECONDS') {
                     input message: 'Are you sure to apply changes ?', ok:'yes', submitter: 'i27academy,sreuser'
                 }
                 sh """
@@ -82,7 +82,7 @@ pipeline {
                 }
             }
             steps {
-                timeout (time: 300, unit: SECONDS) {
+                timeout (time: 300, unit: 'SECONDS') {
                     input message: 'Are you sure to destroy Infra ?', ok:'yes', submitter: 'i27academy,sreuser'
                 }
                 sh """
