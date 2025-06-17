@@ -17,6 +17,7 @@ pipeline {
     environment {
         GCS_BUCKET = "ancient-tractor-462500-u5-tf"
         GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/sa-key.json"
+        TFVARS_FILE = "${params.ENVIRONMENT}.tfvars"
     }
     stages {
         stage ('Setup GCE Auth') {
@@ -55,7 +56,7 @@ pipeline {
             }
             steps {
                 sh """
-                    terraform plan 
+                    terraform plan -var-file=${TFVARS_FILE}
                 """
             }
         }
@@ -67,7 +68,7 @@ pipeline {
             }
             steps {
                 sh """
-                    terraform apply --auto-approve 
+                    terraform apply -var-file=${TFVARS_FILE} --auto-approve 
                 """
             }
         }
