@@ -1,4 +1,4 @@
-project = "	ancient-tractor-462500-u5"
+project = "ancient-tractor-462500-u5"
 region = "us-central1"
 
 # Note: The project ID and region should be consistent across all teams.
