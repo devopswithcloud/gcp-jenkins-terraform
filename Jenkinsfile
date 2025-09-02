@@ -3,6 +3,19 @@ pipeline {
         label 'terraform-slave'
     }
 
+    parameters{
+        choice(
+            name: 'ENVIRONMENT' ,
+            choices: ['dev', 'test', 'stage', 'prod'],
+            description: 'Choose the environment to deploy'
+        )
+        choice(
+            name: 'ACTION' ,
+            choices: "validate\ninit\nplan\napply\ndestroy",
+            description: 'Choose the action to perform'
+        )
+    }
+
     environment {
         GCS_BUCKET = "boanthos-prod-jenkins"
         GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/sa-key.json"
