@@ -33,17 +33,35 @@ pipeline {
 
         // Planning stage
         stage ('plan') {
+            steps {
+                echo "Planning stage"
+                // sh 
+                // """
+                //     terraform plan -out=tfplan
+                // """
+            }
 
         }
 
         // Applying actual infra
         stage ('apply') {
+            steps {
+                echo "Applying stage"
+                // sh """
+                //     terraform apply -auto-approve tfplan
+                // """
+            }
 
         }
 
         // Destroy the infra
-        stage ('destroy') {
-
+        stage ('destroy') { 
+            steps {
+                echo "Destroying stage"
+                // sh """
+                //     terraform destroy -auto-approve
+                // """
+            }
         }
     }
 }
