@@ -49,6 +49,11 @@ pipeline {
 
         // Planning stage
         stage ('plan') {
+            when {
+                expression{
+                    params.ACTION == 'plan'
+                }
+            }
             steps {
                 echo "Planning  stage"
                 sh """
@@ -60,6 +65,11 @@ pipeline {
 
         // Applying actual infra
         stage ('apply') {
+            when {
+                expression{
+                    params.ACTION == 'apply'
+                }
+            }
             steps {
                 echo "Applying stage"
                 // sh """
@@ -71,6 +81,11 @@ pipeline {
 
         // Destroy the infra
         stage ('destroy') { 
+            when {
+                expression{
+                    params.ACTION == 'destroy'
+                }
+            }
             steps {
                 echo "Destroying stage"
                 // sh """
