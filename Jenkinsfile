@@ -71,6 +71,10 @@ pipeline {
                 }
             }
             steps {
+                // abort the build if no input within 5 mins
+                timeout (time: 300, unit: 'SECONDS') {
+                    input message: "Do you want to apply the changes?", ok: "Yes", submitter: "i27academy,siva"
+                }
                 echo "Applying stage"
                 sh """
                     terraform apply -var-file=${env.TFVARS_FILE} --auto-approve 
@@ -87,6 +91,9 @@ pipeline {
                 }
             }
             steps {
+                timeout (time: 300, unit: 'SECONDS') {
+                    input message: "Do you want to apply the changes?", ok: "Yes", submitter: "i27academy,siva"
+                }
                 echo "Destroying stage"
                 sh """
                     terraform destroy -var-file=${env.TFVARS_FILE} --auto-approve 
