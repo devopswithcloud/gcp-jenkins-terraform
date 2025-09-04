@@ -72,9 +72,9 @@ pipeline {
             }
             steps {
                 echo "Applying stage"
-                // sh """
-                //     terraform apply -auto-approve tfplan
-                // """
+                sh """
+                    terraform apply -var-file=${env.TFVARS_FILE} --auto-approve 
+                """
             }
 
         }
@@ -88,9 +88,9 @@ pipeline {
             }
             steps {
                 echo "Destroying stage"
-                // sh """
-                //     terraform destroy -auto-approve
-                // """
+                sh """
+                    terraform destroy -var-file=${env.TFVARS_FILE} --auto-approve 
+                """
             }
         }
     }
