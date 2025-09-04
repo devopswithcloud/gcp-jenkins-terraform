@@ -17,6 +17,7 @@ pipeline {
     }
 
     environment {
+        // bucket name where tfstate file will be stored for all environments
         GCS_BUCKET = "boanthos-prod-jenkins"
         GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/sa-key.json"
     }
@@ -38,9 +39,9 @@ pipeline {
         stage ('init') {
             steps {
                 echo "Testing Jenkinsfile for terrform code"
-                // sh """
-                //     //terraform init --backend-config="bucket=${env.GCS_BUCKET}" --backend-config="prefix=${env.********}"
-                // """ 
+                sh """
+                    terraform init --backend-config="bucket=${env.GCS_BUCKET}" --backend-config="prefix=${params.ENVIRONMENT}"
+                """ 
             }
         }
 
