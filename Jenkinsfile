@@ -20,6 +20,7 @@ pipeline {
         // bucket name where tfstate file will be stored for all environments
         GCS_BUCKET = "boanthos-prod-jenkins"
         GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/sa-key.json"
+        TFVARS_FILE  = "${params.ENVIRONMENT}.tfvars"
     }
 
     stages {
@@ -37,6 +38,7 @@ pipeline {
 
         // Initialize terraform
         stage ('init') {
+            // no need of when condition as we want to have this stage irrespective of action chosen
             steps {
                 echo "Testing Jenkinsfile for terrform code"
                 sh """
@@ -48,11 +50,10 @@ pipeline {
         // Planning stage
         stage ('plan') {
             steps {
-                echo "Planning stage"
-                // sh 
-                // """
-                //     terraform plan -out=tfplan
-                // """
+                echo "Planning  stage"
+                sh """
+                    terraform plan -var-file=${env.TFVARS_FILE}
+                """
             }
 
         }
